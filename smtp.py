@@ -126,7 +126,11 @@ def get_text():
     try:
         with open("Message", "r", encoding="utf-8") as config:
             line = config.readlines()
-            return '\n'.join(line)
+            return ''.join(map(lambda x:
+                               x[:-1] + '.\n'
+                               if x.count('.') == len(x) - 1 and x != '\n'
+                               else x,
+                               lines))
     except:
         return 'default'
 
