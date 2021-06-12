@@ -125,12 +125,25 @@ def get_receivers():
 def get_text():
     try:
         with open("Message", "r", encoding="utf-8") as config:
-            line = config.readlines()
-            return ''.join(map(lambda x:
-                               x[:-1] + '.\n'
-                               if x.count('.') == len(x) - 1 and x != '\n'
-                               else x,
-                               lines))
+            lines = config.readlines()
+            text = ''
+            for line in lines:
+                textline = ''
+                if line.count('.') == len(line):
+                    textline += line + '.\n'
+                else:
+                    for i in range(len(line)):
+                        if line[i] == '.':
+                            textline += '.'
+                            continue
+                        elif i != 0:
+                            textline += '.' + line[-i:]
+                            break
+                        else:
+                            textline = line
+                            break
+                text +=textline
+            return text
     except:
         return 'default'
 
